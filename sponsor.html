@@ -156,6 +156,7 @@ i
 		}
 
 		.current {
+			font-size: 30px;
 			text-align: center;
 			border: 2px solid black;
 			padding: 10px;
@@ -181,10 +182,9 @@ i
 							Create your own one liner ad (140 character of text, a picture, and a hyperlink.)
 							<br> Once you have it, the price goes up. Whenever someone purchaes it, you get 50% of what's paid, and all P3C holders
 							get the other 50%.
-							<br> Price is 5x what you paid for first 24 hours, 3x for next 24 hours, 2x for next 24 hours, and default price after
-							that.
+							<br> Price is 5x for first 24 hours, 3x for next 24 hours, 2x for next 24 hours, and default price after.
 							<br>
-							<br> Rules: Text + Hyperlink Text < 140 char. Img link 20 x 20. We reserve right to not display on P3C.io if necesary.
+							<br> Rules: Text + Hyperlink Text < 140 char. Img link 30 x 30. We reserve right to not display on P3C.io if necesary.
 							 <br>
 						</p>
 
@@ -229,7 +229,7 @@ i
 							<p></p>
 							<div class="ui divider"></div>
 							<div class="ui grid">
-								<div class="eight wide column">
+								<div class="sixteen wide column">
 									<h2>Img Link (20x20):</h2>
 									<form class="ui form">
 										<div class="field">
@@ -245,20 +245,18 @@ i
 									<h2>Hyperlink Text</h2>
 									<form class="ui form">
 										<div class="field">
-											<input type="text" id="hyperlinkText" placeholder="Click Here">
+											<input type="text" id="hyperlinkText" placeholder="Click Here.">
 										</div>
 									</form>
 									<h2>Hyperlink:</h2>
 									<form class="ui form">
 										<div class="field">
-											<input type="text" id="hyperlink" placeholder="https://bitcoin.com">
+											<input type="text" id="hyperlink" placeholder="https://company.com">
 										</div>
 									</form>
 								</div>
 								<button id="purchase" class="ui huge button">Purchase, costs <div id="price">price</div></button>
-								<div class="row">
-									<div id="sponsor"></div>
-								</div>
+
 							</div>
 						</div>
 					</div>
