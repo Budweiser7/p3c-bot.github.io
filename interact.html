@@ -67,9 +67,9 @@
                     <div class="ui positive button price no click">
                         <i class="ethereum green icon"></i>
                         <strong>
-                            <span class="buyPrice" id="tokenBuyGet">0.0000</span>
+                            <span class="buy-price" id="tokenBuyGet">0.0000</span>
                             <span class="ui green text small eleven"> | $</span> <span class="ui green text small eleven"
-                                id="tokenBuyPrice">0.00</span>
+                                id="buy-usd">0.00</span>
                         </strong>
                     </div>
                 </div>
@@ -92,9 +92,6 @@
             <div class="eight wide column border right border left" style="background: rgba(58, 150, 139, 0.17);">
                 <h1 class="ui header">
                     <div style="margin-left: 10px;" class="content">My Holdings
-                        <div class="sub header">Strong hands lead to growth and stability. <a target="_blank" href="https://p3c.trade">Price
-                                Chart
-                            </a></div>
                     </div>
                 </h1>
 
@@ -165,7 +162,8 @@
                         <i class="ethereum green icon"></i>
                         <strong>
                             <span class="sellPrice" id="tokenSellGet">0.0000</span>
-                            <span class="ui blue text small eleven"> | $</span> <span class="ui blue text small eleven" id="tokenSellPrice">0.00</span>
+                            <span class="ui blue text small eleven"> | $</span> <span class="ui blue text small eleven"
+                                id="tokenSellPrice">0.00</span>
                         </strong>
                     </div>
                 </div>
@@ -192,8 +190,9 @@
         <div class="ui olive message">
             <p>Make sure you have an
                 <a target="_blank" href="https://chrome.google.com/webstore/detail/saturn-wallet/nkddgncdjgjfcddamfgcmfnlhccnimig">Saturn
-                    Wallet enabled</a>, and Metamask turned off. <b>Contract will show 0 balance if wallet not connected
-                    properly!</b> Need help? <a target="_blank" href="https://www.youtube.com/watch?v=XEDjtJJH0BE&"><b>Tutorial.</b></a>
+                    Wallet enabled</a>, and Metamask turned off. <b>Contract will show 0 balance if wallet not
+                    connected
+                    properly!</b> <a target="_blank" href="https://www.youtube.com/watch?v=XEDjtJJH0BE&"><b>Video Tutorial.</b></a>
                 </b>
             </p>
         </div>
@@ -204,23 +203,18 @@
 
             <div class="eight wide column">
                 <div style="text-align: center">
-                    <a href="https://discord.gg/crjsdJr" target="_blank" class="ui left labeled icon large fluid green button" style="margin-bottom:10px;">
+                    <a href="https://discord.gg/crjsdJr" target="_blank" class="ui left labeled icon large fluid green button"
+                        style="margin-bottom:10px;">
                         <i class="left discord icon"></i>
                         Join Our Community
                     </a>
                 </div>
-                <div class="custom-computer only" style="text-align: center">
-                    <iframe src="https://titanembeds.com/embed/463160028099117059?defaultchannel=463160028644245507&scrollbartheme=light-thin&theme=IceWyvern"
-                        height="500" width="500" frameborder="0"></iframe>
-                </div>
                 <div class="ui segments">
                     <div class="ui segment">
                         <h4 class="ui header">
-                            Instructions:</h4>
-                    </div>
-                    <div class="ui segment">
+                            </h4>
                         <p>
-                            Please use
+                            <b>Instructions:</b> Please use
                             <a target="_blank" href="https://chrome.google.com/webstore/detail/saturn-wallet/nkddgncdjgjfcddamfgcmfnlhccnimig">Saturn
                                 Wallet
                             </a> to interact (disable Metamask while using).
@@ -228,21 +222,41 @@
                     </div>
                     <div class="ui segment">
                         <p>
-                            <b>1.</b> You buy into the contract by purchasing P3C, every token purchased increases the P3C
+                            <b>1.</b> You buy into the contract by purchasing P3C, every token purchased increases the
+                            P3C
                             price by +0.00000001 ETC.
                             <br>
-                            <b>2.</b> 10% of what you spend to buy the P3C gets distributed proportionally to all other P3C
+                            <b>2.</b> 10% of what you spend to buy the P3C gets distributed to all other
+                            P3C
                             holders.
                             <br>
-                            <b>3.</b> When you sell your P3C, you get back ETC at the specified price, and the global price
-                            per P3C goes down by -0.00000001 ETC.
+                            <b>3.</b> When you sell your P3C, you get back ETC, and the global
+                            price
+                            goes down by -0.00000001 ETC.
                             <br>
-                            <b>4.</b> 10% of what you would get back for the sale is distributed to all other P3C holders
+                            <b>4.</b> 10% of what you would get back is distributed to P3C
+                            holders
                             proportionally.
                         </p>
                     </div>
                 </div>
-
+                <div class="ui segments masternode hidden">
+                    <div class="ui segment">
+                        <h4 class="ui header">You are currently holding enough tokens to run a Masternode!</h4>
+                    </div>
+                    <div class="ui secondary segment">
+                        <div class="link masternode">
+                            <a href="/?masternode=0x">https://p3c.io/index.html?masternode=0x123456</a>
+                        </div>
+                    </div>
+                    <div class="ui segment">
+                        <p>You receive
+                            <strong>33%</strong> of the community fee when someone buys tokens via your link! This does
+                            not
+                            affect how many tokens they purchase.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div class="eight wide column">
@@ -252,8 +266,7 @@
                             <i class="circular inverted blue exchange alternate icon"></i>
                             <div class="content">
                                 Transfer
-                                <div class="sub header">Be aware that sending tokens immediately withdraws your dividends
-                                    and imposes a <b>10%</b> community fee.</div>
+                                <div class="sub header">Transfer your P3C to another account.</div>
                             </div>
                         </h4>
                     </div>
@@ -292,23 +305,6 @@
                         </p>
                     </div>
                 </div>
-                <div class="ui segments masternode hidden">
-                    <div class="ui segment">
-                        <h4 class="ui header">You are currently holding enough tokens to run a Masternode!</h4>
-                    </div>
-                    <div class="ui secondary segment">
-                        <div class="link masternode">
-                            <a href="/?masternode=0x">https://p3c.io/index.html?masternode=0x123456</a>
-                        </div>
-                    </div>
-                    <div class="ui segment">
-                        <p>You receive
-                            <strong>33%</strong> of the community fee when someone buys tokens via your link! This does not
-                            affect how many tokens they purchase.
-                        </p>
-                    </div>
-                </div>
-
             </div>
         </div>
 
@@ -341,6 +337,7 @@
     <script>
         $(document).ready(function () {
             var converted = false
+
             function refreshPrice() {
                 $.getJSON('https://min-api.cryptocompare.com/data/price?fsym=ETC&tsyms=USDT', function (json) {
 
@@ -357,13 +354,16 @@
                     $("#tokenSellPrice").text(tokenSellPrice)
                     if ($("#convertedETC").html() !== 'undefined' && !converted) {
                         converted = true;
-                        var ETCValue = $("#converted").html().match(/[+-]?\d+(?:\.\d+)?/g).map(Number) / USETC
+                        var ETCValue = $("#converted").html().match(/[+-]?\d+(?:\.\d+)?/g).map(Number) /
+                            USETC
                         $("#convertedETC").text(ETCValue.toFixed(2) + " ETC")
                     }
                 });
             }
 
-            setTimeout(function () { refreshPrice() }, 2500);
+            setTimeout(function () {
+                refreshPrice()
+            }, 2500);
             setInterval(function () {
                 refreshPrice() // this will run after every 5 seconds
             }, 12000);
