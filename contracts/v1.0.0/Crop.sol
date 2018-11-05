@@ -1,5 +1,21 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.20;
 
+/***
+ *     ,-----.                         
+ *    '  .--./ ,--.--.  ,---.   ,---.  
+ *    |  |     |  .--' | .-. | | .-. | 
+ *    '  '--'\ |  |    ' '-' ' | '-' ' 
+ *     `-----' `--'     `---'  |  |-'  
+ *                             `--'    
+ *  "Good things come to those who wait."
+ *  Fork of contract at ETH (0x0D6C969d0004B431189f834203CE0f5530e06259)
+ *  What?
+ *  -> A crop contract auto reinvests P3C on behalf of users.
+ *  -> When someone reinvests your crops, they withdraw the divs, and then the divs are used to buy P3C with them as the referrer.
+ *  -> Creating a crop is NOT necessary for using P3C, only a convenience. Use this while you keep P3C in storage.
+ *  -> This needs to de deployed the farm contract, so it can be referenced. Make sure to change hourglass address.
+ */
+ 
 interface P3C {
   function() payable external;
   function buy(address _playerAddress) payable external returns(uint256);
@@ -18,7 +34,7 @@ contract Crop {
   address public owner;
   bool public disabled;
 
-  address public p3cAddress = 0xDF9AaC76b722B08511A4C561607A9bf3AfA62E49;
+  address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
 
   modifier onlyOwner() {
     require(msg.sender == owner);
@@ -37,14 +53,14 @@ contract Crop {
   }
 
   /**
-   * @dev Enables anyone with a masternode to earn referral fees on P3D reinvestments.
+   * @dev Enables anyone with a masternode to earn referral fees on P3C reinvestments.
    */
   function reinvest() external {
     // reinvest must be enabled
     require(disabled == false);
     
     // setup p3c
-    P3C p3c = P3C(0xDF9AaC76b722B08511A4C561607A9bf3AfA62E49);
+    P3C p3c = P3C(p3cAddress);
 
     // withdraw dividends
     p3c.withdraw();
@@ -54,7 +70,7 @@ contract Crop {
   }
 
   /**
-   * @dev Buy P3D tokens
+   * @dev Buy P3C tokens
    * @param _playerAddress referral address.
    */
   function buy(address _playerAddress) external payable onlyOwner() {
@@ -62,7 +78,7 @@ contract Crop {
   }
 
   /**
-   * @dev Sell P3D tokens and send balance to owner
+   * @dev Sell P3C tokens and send balance to owner
    * @param _amountOfTokens amount of tokens to sell.
    */
   function sell(uint256 _amountOfTokens) external onlyOwner() {
@@ -74,7 +90,7 @@ contract Crop {
   }
 
   /**
-   * @dev Withdraw P3D dividends and send balance to owner
+   * @dev Withdraw P3C dividends and send balance to owner
    */
   function withdraw() external onlyOwner() {
     // withdraw dividends
@@ -85,7 +101,7 @@ contract Crop {
   }
 
   /**
-   * @dev Sell P3D tokens, withdraw dividends, and send balance to owner
+   * @dev Sell P3C tokens, withdraw dividends, and send balance to owner
    */
   function exit() external onlyOwner() {
     // sell all tokens and withdraw
@@ -96,7 +112,7 @@ contract Crop {
   }
   
   /**
-   * @dev Transfer P3D tokens
+   * @dev Transfer P3C tokens
    * @param _toAddress address to send tokens to.
    * @param _amountOfTokens amount of tokens to send.
    */

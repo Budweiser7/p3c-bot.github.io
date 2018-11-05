@@ -5,7 +5,7 @@
  * See ETH: 0xC0c001140319C5f114F8467295b1F22F86929Ad0 for original.
  * -> What is different from original:
  * Hardcode divs to 75%.
- * Removed requirment of humans.
+ * Removed requirement of humans.
  * Removed unecessary rate limiting.
  * Removed unecessary distribution parameters.
  * 

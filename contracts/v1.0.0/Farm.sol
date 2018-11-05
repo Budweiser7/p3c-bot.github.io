@@ -1,5 +1,21 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.20;
 
+/***
+ *                                         
+ *    ,------.                             
+ *    |  .---'  ,--,--. ,--.--. ,--,--,--. 
+ *    |  `--,  ' ,-.  | |  .--' |        | 
+ *    |  |`    \ '-'  | |  |    |  |  |  | 
+ *    `--'      `--`--' `--'    `--`--`--' 
+ *   
+ *  "With help, wealth grows..."
+ *  Fork of contract at ETH (0x78CF7525a755f3542a5652Fe8EAB87c23E910dA5)
+ *  What?
+ *  -> Deploys and manages Crop contracts on behalf of users.
+ *  -> A crop contract auto reinvests P3C on behalf of users.
+ *  -> MUST BE DEPLOYED AFTER THE CROP CONTRACT IS DEPLOYED.
+ */       
+ 
 interface P3C {
   function() payable external;
   function buy(address _playerAddress) payable external returns(uint256);
@@ -17,10 +33,9 @@ interface P3C {
 contract ProxyCrop {
     address public owner;
     bool public disabled;
-    address public p3cAddress = 0xDF9AaC76b722B08511A4C561607A9bf3AfA62E49;
-    address public cropAddress = 0xDF9AaC76b722B08511A4C561607A9bf3AfA62E49;
+    address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
 
-    constructor(address _owner, address _referrer) public payable {
+    function ProxyCrop(address _owner, address _referrer) public payable {
       owner = _owner;
 
       // plant some seeds
@@ -38,7 +53,8 @@ contract ProxyCrop {
 
         // Call the implementation.
         // out and outsize are 0 because we don't know the size yet.
-        let result := delegatecall(gas, cropAddress, 0, calldatasize, 0, 0)
+        // USE DEPLOYED CROP CONTRACT HERE 
+        let result := delegatecall(gas, 0xfA729BC0563fD910416d5eCE9b72Ca263F57079F, 0, calldatasize, 0, 0)
 
         // Copy the returned data.
         returndatacopy(0, 0, returndatasize)
@@ -59,8 +75,8 @@ contract Farm {
   event CreateCrop(address indexed owner, address indexed crop);
 
   /**
-   * @dev Create a crop contract that can hold P3D and auto-reinvest.
-   * @param _referrer referral address for buying P3D.
+   * @dev Create a crop contract that can hold P3C and auto-reinvest.
+   * @param _referrer referral address for buying P3C.
    */
   function create(address _referrer) external payable {
     // sender must not own a crop
@@ -70,6 +86,6 @@ contract Farm {
     crops[msg.sender] = (new ProxyCrop).value(msg.value)(msg.sender, _referrer);
 
     // fire event
-    emit CreateCrop(msg.sender, crops[msg.sender]);
+    CreateCrop(msg.sender, crops[msg.sender]);
   }
 }
