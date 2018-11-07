@@ -45,12 +45,12 @@ contract Farm {
   mapping (address => address) public crops;
 
   // event for creating a new crop
-  event CreateCrop(address indexed owner, address indexed crop);
+  event CreateCrop(address indexed owner, address indexed crop, uint256 version);
 
   /**
    * @dev Link a crop to an owner address 
    */
-  function link(address owner, address cropAddress) public {
+  function link(address owner, address cropAddress, uint256 version) public {
     // sender must not own a crop
     require(crops[owner] == address(0));
     
@@ -61,7 +61,7 @@ contract Farm {
     crops[owner] = cropAddress;
 
     // fire event
-    CreateCrop(owner, cropAddress);
+    emit CreateCrop(owner, cropAddress, version);
   }
   
   function myCrop() public view returns (address) {

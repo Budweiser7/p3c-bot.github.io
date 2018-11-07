@@ -32,7 +32,7 @@ contract Hourglass {
 }
 
 contract Farm {
-  function link(address, address) public;
+  function link(address, address, uint256) public;
 }
 
 contract Crop {
@@ -43,7 +43,7 @@ contract Crop {
   
   // ETC P3C
   address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
-  address public farmAddress = 0x2884cd8dcab5fd5f8644b9b20de07c4459b47e02;
+  address public farmAddress = 0x17905869117785747f5bfe08a23891394027752a;
   uint256 public version = 1;
 
   modifier onlyOwner() {
@@ -54,6 +54,7 @@ contract Crop {
   function Crop() public {
     owner = msg.sender;
     p3c = Hourglass(p3cAddress);
+    farm = Farm(farmAddress);
   }
   
   /**
@@ -64,9 +65,8 @@ contract Crop {
    /**
    * @dev Link the crop to the farm.
    */
-  function linkCrop(){
-    farm = Farm(farmAddress);
-    farm.link(owner, address(this));
+  function linkCrop() public {
+    farm.link(owner, address(this), version);
   }
   
   /**
@@ -124,18 +124,7 @@ contract Crop {
     owner.transfer(address(this).balance);
   }
 
-  /**
-   * @dev Sell P3C tokens, withdraw dividends, and send balance to owner
-   */
-  function exit() public onlyOwner() {
-    // sell all tokens and withdraw
-    p3c.exit();
-
-    // transfer to owner
-    owner.transfer(address(this).balance);
-  }
-  
-  /**
+   /**
    * @dev Transfer P3C tokens
    * @param _toAddress address to send tokens to.
    * @param _amountOfTokens amount of tokens to send.
@@ -152,23 +141,9 @@ contract Crop {
   }
   
    /**
-   * @dev Get dividends of the owner - includes referral bonus - and does not include crop dividends
-   */
-  function ownerDividends() public view returns (uint256) {
-    return p3c.dividendsOf(owner);
-  }
-  
-   /**
    * @dev Get amount of tokens owned by the crop. 
    */
   function cropTokens() public view returns (uint256) {
     return p3c.myTokens();
-  }
-  
-   /**
-   * @dev Get amount of tokens owned by the owner. Does not include crop tokens.
-   */
-  function ownerTokens() public view returns (uint256) {
-    return p3c.balanceOf(owner);
   }
 }
