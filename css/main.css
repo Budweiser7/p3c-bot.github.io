@@ -3,6 +3,16 @@ body
     color: rgba(0,0,0,.7) !important;
 }
 
+.clock {
+    display: inline-block;
+    width: auto;
+    margin: 1em;
+}
+
+.container {
+    text-align: center;
+}
+
 .ui.header { color: #34495e; }
 .ui.table { color: rgba(0,0,0,.65); }
 .ui.table thead th { color: #7f8c8e; }
