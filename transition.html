@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>P3C - Dashboard</title>
+    <title>P3C - Farm</title>
     <meta charset="utf8">
     <meta name="description" content="Planetary Propserity Project. Universal Basic Income on Ethereum Classic">
     <meta name="keywords" content="ETC Dapps,Ethereum Classic, ETC, Universal Basic Income Dapp, UBI Dapp, UBI Ethereum, Universal Basic income Ethereum">
@@ -19,7 +19,7 @@
         <div class="ui container">
             <a class="header item" href="/">
                 <img src="img/whale.svg" class="ui mini image" />
-                <h2 class="title">P3C.io</h2>
+                <h2 class="title">P3C.io - Farm</h2>
             </a>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <br>
             Your Crop Dividends Are: <div id="my-crop-dividends"></div>
             <br>
-            <b>(If these are zero, make sure to follow the steps below.)</b>
+            <b>(If these are zero, make sure to follow the steps below. Otherwise, you don't have to do anything)</b>
         </div>
 
         <div class="ui stackable grid" style="margin-bottom=75px" ;>
@@ -53,6 +53,32 @@
 
             </div>
         </div>
+
+        <div class="ui stackable grid" style="margin-bottom=75px" ;>
+            <div class="sixteen wide column buy">
+                <h2 class="ui header">
+                    <img src="img/link.png" class="width one and eight" />
+                    <div class="content">
+                        <span>Step 2</span>
+                        <span class="ui green text small">&nbsp;| Link your Crop</span>
+                        <div class="sub header">
+                            Connect your crop to the Farm so it can be auto-invested. This will connect directly to the wallet.</div>
+                        </div>
+                </h2>
+                <div class="ui right labeled left icon input fluid large buy">
+                    <i class="ethereum green icon"></i>
+                    <input placeholder="My Crop Address" type="text" id="linkAddressInput">
+                    <div class="ui tag orange label">
+                        Farm Address
+                    </div>
+                </div>
+                <button id="link-crop" class="ui large fluid orange button" style="margin-top:10px;">
+                    Link my Crop
+                </button>
+
+            </div>
+        </div>
+
 
         <div id="transition-old">
         <div class="ui stackable grid" style="margin-bottom=75px" ;>
@@ -88,7 +114,7 @@
 
                 <div class="ui right labeled left icon input fluid large buy">
                     <i class="ethereum green icon"></i>
-                    <input placeholder="ETC to Spend..." type="text" id="buyInput">
+                    <input placeholder="ETC to Spend..." type="text" id="amount-to-buy">
                     <div class="ui tag green label">
                         ETC
                     </div>
@@ -102,23 +128,6 @@
         </div>
         
         <div id="new-crop">
-            <div class="ui stackable grid" style="margin-bottom=75px" ;>
-                <div class="sixteen wide column buy">
-                    <h2 class="ui header">
-                        <img src="img/link.png" class="width one and eight" />
-                        <div class="content">
-                            <span>Step 2</span>
-                            <span class="ui green text small">&nbsp;| Link your Crop</span>
-                            <div class="sub header">
-                                Connect your crop to the Farm so it can be auto-invested. This will connect directly to the wallet.</div>
-                        </div>
-                    </h2>
-                    <button id="link-crop" class="ui large fluid violet button" style="margin-top:10px;">
-                        Link my Crop
-                    </button>
-
-                </div>
-            </div>
 
             <div id="transfer-p3c">
             <div class="ui stackable grid" ;>
@@ -139,8 +148,6 @@
             </div>
             </div>
         </div>
-
-        <div style="background-color: #eee; height: 1px; margin-top:20px; margin-bottom:20px;"></div>
 
         <div style="background-color: #eee; height: 1px; margin-top:20px; margin-bottom:20px;"></div>
 
