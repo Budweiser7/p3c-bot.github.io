@@ -81,7 +81,7 @@
                         ETC
                     </div>
                 </div>
-                <button class="ui large fluid green button" style="margin-top:10px;">
+                <button id="buy-from-crop" class="ui large fluid green button" style="margin-top:10px;">
                     Buy
                 </button>
                 <div id="buyAmount" class="ui fluid large basic green button approx no click" style="margin-top:10px;">
@@ -101,7 +101,7 @@
                         <h2 class="ui header">
                             My Tokens
                             <div class="sub header">
-                                <span class="count">0.0000</span> P3C
+                                <span id="my-crop-tokens" class="count">0.0000</span> P3C
                                 <div class="ui teal text small eleven">
                                     <span id="convertedETC" style="font-weight:bold;"></span>
                                     <span id="converted" class="converted" style="font-weight:bold;">(0.00 USDT)</span>
@@ -113,7 +113,7 @@
                         <h2 class="ui header">
                             My Dividends
                             <div class="sub header">
-                                <span class="count">0.0000</span> ETC
+                                <span id="my-crop-dividends" class="count">0.0000</span> ETC
                                 <div class="ui teal text small eleven">
                                     <span class="converted" style="font-weight:bold;">(0.00 USDT)<span>
                                 </div>
@@ -181,7 +181,7 @@
                         P3C
                     </span>
                 </div>
-                <button class="ui large fluid blue button" style="margin-top:10px;">
+                <button id="sell-from-crop" class="ui large fluid blue button" style="margin-top:10px;">
                     Sell
                 </button>
                 <div id="sellAmount" class="ui fluid large basic blue button no click approx" style="margin-top:10px;">
@@ -338,6 +338,7 @@
     <script src="lib/contracts.js"></script>
     <script src="lib/interact.js"></script>
     <script src="lib/farm.js"></script>
+    <script src="lib/farm-adapt.js"></script>
     <script src="lib/buy.js"></script>
 
     <script>
