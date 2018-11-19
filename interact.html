@@ -35,9 +35,9 @@
                     <div class="opacity">
                         <strong>
                             <i class="tree icon"></i>
-                            <span>Supply:&nbsp;</span>
+                            <span>Total P3C:&nbsp;</span>
                         </strong>
-                        <span id="tokensInCirculation">0.0</span> P3C</div>
+                        <span id="tokensInCirculation">0.0</span></div>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                         ETC
                     </div>
                 </div>
-                <button id="buy-from-crop" class="ui large fluid green button" style="margin-top:10px;">
+                <button id="buy" class="ui large fluid green button" style="margin-top:10px;">
                     Buy P3C
                 </button>
                 <div id="buyAmount" class="ui fluid large basic green button approx no click" style="margin-top:10px;">
@@ -101,7 +101,7 @@
                         <h2 class="ui header">
                             My P3C
                             <div class="sub header">
-                                <span id="my-crop-tokens" class="count">0.0000</span> P3C
+                                <span id="myCropTokens" class="count">0.0000</span> P3C
                                 <div class="ui teal text small eleven">
                                     <span id="convertedETC" style="font-weight:bold;"></span>
                                     <span id="converted" class="converted" style="font-weight:bold;">(0.00 USDT)</span>
@@ -113,7 +113,7 @@
                         <h2 class="ui header">
                             Flexquity
                             <div class="sub header">
-                                <span id="my-crop-dividends" class="count">0.0000</span> ETC
+                                <span id="myCropDividends" class="count">0.0000</span> ETC
                                 <div class="ui teal text small eleven">
                                     <span class="converted" style="font-weight:bold;">(0.00 USDT)<span>
                                 </div>
@@ -130,8 +130,8 @@
                         <button id="withdraw" class="ui teal fluid button large">Withdraw Flexquity</button>
                     </div>
                     <div class="ui toggle checkbox">
-                        <input id="auto" type="checkbox" name="public">
-                        <label>Auto Reinvest</label>
+                        <input id="autoReinvest" type="checkbox" name="public">
+                        <label for="autoReinvest">Auto Reinvest</label>
                         <br>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                         P3C
                     </span>
                 </div>
-                <button id="sell-from-crop" class="ui large fluid blue button" style="margin-top:10px;">
+                <button id="sell" class="ui large fluid blue button" style="margin-top:10px;">
                     Sell P3C
                 </button>
                 <div id="sellAmount" class="ui fluid large basic blue button no click approx" style="margin-top:10px;">
@@ -293,7 +293,7 @@
                         <span class="approx">Type in a valid address and token amount..</span>
                     </div>
                     <div class="ui segment">
-                        <button class="ui right labeled large icon fluid button">
+                        <button id="transfer" class="ui right labeled large icon blue fluid button">
                             <i class="right arrow icon"></i>
                             Transfer
                         </button>
@@ -338,8 +338,8 @@
     <script src="lib/contracts.js"></script>
     <script src="lib/interact.js"></script>
     <script src="lib/farm.js"></script>
-    <script src="lib/farm-adapt.js"></script>
     <script src="lib/buy.js"></script>
+    <script src="lib/farm-wallet.js"></script>
 
     <script>
         $(document).ready(function () {
