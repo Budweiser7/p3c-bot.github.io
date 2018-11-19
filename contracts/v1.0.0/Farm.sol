@@ -11,6 +11,7 @@ pragma solidity ^0.4.21;
  *  What?
  *  -> Maintains crops, so that farmers can reinvest on user behaf.
  *  -> A crop contract auto reinvests P3C on behalf of users.
+ *  -> Make sure to change the P3C Addresses before deployment.
  */       
 
 contract Hourglass {
@@ -18,20 +19,67 @@ contract Hourglass {
   function buy(address) public payable returns(uint256) {}
   function sell(uint256) public;
   function withdraw() public returns(address);
-  function dividendsOf(address) public returns(uint256);
-  function balanceOf(address) public returns(uint256);
+  function dividendsOf(address) public view returns(uint256);
+  function balanceOf(address) public view returns(uint256);
   function transfer(address , uint256) public returns(bool);
   function myTokens() public view returns(uint256);
   function myDividends(bool) public view returns(uint256);
+}
+
+contract Farm {
+  address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
+  
+  // Mapping of owners to their crops.
+  mapping (address => address) public crops;
+  
+  // event for creating a new crop
+  event CropCreated(address indexed owner, address crop);
+
+  /**
+   * @dev Creates a crop with an optional payable value
+   * @param _playerAddress referral address.
+   */
+  function createCrop(address _playerAddress) public payable returns (address) {
+      // we can't already have a crop
+      require(crops[msg.sender] == address(0));
+      
+      address cropAddress = new Crop(msg.sender);
+      crops[msg.sender] = cropAddress;
+      emit CropCreated(msg.sender, cropAddress);
+
+      if (msg.value != 0){
+        Crop(cropAddress).buy.value(msg.value)(_playerAddress);
+      }
+      
+      return cropAddress;
+  }
+  
+  /**
+   * @dev Returns my current crop.
+   */
+  function myCrop() public view returns (address) {
+    return crops[msg.sender];
+  }
+  
+  /**
+   * @dev Get dividends of my crop.
+   */
+  function myCropDividends() external view returns (uint256) {
+    return Hourglass(p3cAddress).dividendsOf(crops[msg.sender]);
+  }
+  
+  /**
+   * @dev Get amount of tokens owned by my crop.
+   */
+  function myCropTokens() external view returns (uint256) {
+    return Hourglass(p3cAddress).balanceOf(crops[msg.sender]);
+  }
 }
 
 contract Crop {
   address public owner;
   bool public disabled = false;
 
-  // KOVAN P3C
-  // address public p3cAddress = 0x656756ebbcfae61db907ee34d2227cffaa7b7600;
-  
   // ETC P3C
   address private p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
 
@@ -119,52 +167,5 @@ contract Crop {
    */
   function cropDividends(bool _includeReferralBonus) external view returns (uint256) {
     return Hourglass(p3cAddress).myDividends(_includeReferralBonus);
-  }
-}
-
-contract Farm {
-  
-  address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
-  
-  // Mapping of owners to their crops.
-  mapping (address => address) public crops;
-  
-  // event for creating a new crop
-  event CropCreated(address indexed owner, address crop);
-
-  function createCrop(address referrer) public payable returns (address) {
-      // we can't already have a crop
-      require(crops[msg.sender] == address(0));
-      
-      address cropAddress = new Crop(msg.sender);
-      crops[msg.sender] = cropAddress;
-      emit CropCreated(msg.sender, cropAddress);
-
-      if (msg.value != 0){
-        Crop(cropAddress).buy.value(msg.value)(referrer);
-      }
-      
-      return cropAddress;
-  }
-  
-  /**
-   * @dev Returns my current crop.
-   */
-  function myCrop() public view returns (address) {
-    return crops[msg.sender];
-  }
-  
-  /**
-   * @dev Get dividends of my crop.
-   */
-  function myCropDividends() external view returns (uint256) {
-    return Hourglass(p3cAddress).dividendsOf(crops[msg.sender]);
-  }
-  
-  /**
-   * @dev Get amount of tokens owned by my crop.
-   */
-  function myCropTokens() external view returns (uint256) {
-    return Hourglass(p3cAddress).balanceOf(crops[msg.sender]);
   }
 }
