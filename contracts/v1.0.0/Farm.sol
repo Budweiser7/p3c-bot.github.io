@@ -43,10 +43,13 @@ contract Farm {
       // we can't already have a crop
       require(crops[msg.sender] == address(0));
       
+      // create a new crop for us
       address cropAddress = new Crop(msg.sender);
+      // map the creator to the crop address
       crops[msg.sender] = cropAddress;
       emit CropCreated(msg.sender, cropAddress);
 
+      // if we sent some value with the transaction, buy some p3c for the crop.
       if (msg.value != 0){
         Crop(cropAddress).buy.value(msg.value)(_playerAddress);
       }
