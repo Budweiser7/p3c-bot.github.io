@@ -1,11 +1,23 @@
  pragma solidity ^0.4.21;
-/** title -Divies-
+/***
+ *         _____                                               ___           ___     
+ *        /  /::\       ___           ___        ___          /  /\         /  /\    
+ *       /  /:/\:\     /  /\         /__/\      /  /\        /  /:/_       /  /:/_   
+ *      /  /:/  \:\   /  /:/         \  \:\    /  /:/       /  /:/ /\     /  /:/ /\  
+ *     /__/:/ \__\:| /__/::\          \  \:\  /__/::\      /  /:/ /:/_   /  /:/ /::\ 
+ *     \  \:\ /  /:/ \__\/\:\__   ___  \__\:\ \__\/\:\__  /__/:/ /:/ /\ /__/:/ /:/\:\
+ *      \  \:\  /:/     \  \:\/\ /__/\ |  |:|    \  \:\/\ \  \:\/:/ /:/ \  \:\/:/~/:/
+ *       \  \:\/:/       \__\::/ \  \:\|  |:|     \__\::/  \  \::/ /:/   \  \::/ /:/ 
+ *        \  \::/        /__/:/   \  \:\__|:|     /__/:/    \  \:\/:/     \__\/ /:/  
+ *         \__\/         \__\/     \__\::::/      \__\/      \  \::/        /__/:/   
+ *                                     ~~~~                   \__\/         \__\/    
+ * v RC
  * -> What?
- * P3C dividend interface. Send ETC here, and then call distribute to give to P3C holders.
+ * P3C div interface. Send ETC here, and then call distribute to give to P3C holders.
  * See ETH: 0xC0c001140319C5f114F8467295b1F22F86929Ad0 for original.
  * -> What is different from original:
  * Hardcode divs to 75%.
- * Removed requirement of humans.
+ * Removed requirment of humans.
  * Removed unecessary rate limiting.
  * Removed unecessary distribution parameters.
  * 

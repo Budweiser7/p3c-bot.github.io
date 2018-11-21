@@ -10,7 +10,7 @@ pragma solidity ^0.4.20;
  *           _\/\\\_____________\///\\\\\\\\\/______\////\\\\\\\\\_ 
  *            _\///________________\/////////___________\/////////__
  * 
- * v 1.0.0
+ * v RC
  * P3C - Planetary Prosperity Project
  * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
@@ -32,13 +32,6 @@ contract Hourglass {
     // only people with profits
     modifier onlyStronghands() {
         require(myDividends(true) > 0);
-        _;
-    }
-    
-    // DEPRECATED There are no admins set in constructor. This always reverts.
-    modifier onlyAdministrator(){
-        address _customerAddress = msg.sender;
-        require(administrators[keccak256(_customerAddress)]);
         _;
     }
     
@@ -80,8 +73,8 @@ contract Hourglass {
     /*=====================================
     =            CONFIGURABLES            =
     =====================================*/
-    string public name = "P3Cv1.0.0";
-    string public symbol = "P3C";
+    string public name = "P3CvRC";
+    string public symbol = "P3CvRC";
     uint8 constant public decimals = 18;
     uint8 constant internal dividendFee_ = 10;
     uint256 constant internal tokenPriceInitial_ = 0.0000001 ether;
@@ -89,7 +82,7 @@ contract Hourglass {
     uint256 constant internal magnitude = 2**64;
     
     // masternodes for all.
-    uint256 public stakingRequirement = 1;
+    uint256 public stakingRequirement = 0;
     
    /*================================
     =            DATASETS            =
@@ -100,12 +93,6 @@ contract Hourglass {
     mapping(address => int256) internal payoutsTo_;
     uint256 internal tokenSupply_ = 0;
     uint256 internal profitPerShare_;
-    
-    // DEPRECATED - left in for ABI comaptibility administrator list, always empty. 
-    mapping(bytes32 => bool) public administrators;
-    
-    // DEPRECATED - left in for ABI comaptibility
-    bool public onlyAmbassadors = false;
     
     /*=======================================
     =            PUBLIC FUNCTIONS            =
@@ -241,8 +228,15 @@ contract Hourglass {
     }
     
     
-    /* No fee transfer */
-    function transfer(address _toAddress, uint256 _amountOfTokens) onlyHolders() public returns(bool) {
+    /**
+     * Transfer token to a different address. No fees.
+     */
+     function transfer(address _toAddress, uint256 _amountOfTokens) 
+        onlyHolders() 
+        public 
+        returns(bool) 
+    {
+        // cant send to 0 address
         require(_toAddress != address(0));
         // setup
         address _customerAddress = msg.sender;
@@ -267,59 +261,6 @@ contract Hourglass {
         // ERC20
         return true;
     }
-    
-    // These do nothing and are only left in for ABI comaptibility reasons.
-    /*----------  ADMINISTRATOR ONLY FUNCTIONS  ----------*/
-    /**
-     * In case the amassador quota is not met, the administrator can manually disable the ambassador phase.
-     */
-    function disableInitialStage()
-        onlyAdministrator()
-        public
-    {
-        return;
-    }
-    
-    /**
-     * In case one of us dies, we need to replace ourselves.
-     */
-    function setAdministrator(bytes32 _identifier, bool _status)
-        onlyAdministrator()
-        public
-    {
-        return;
-    }
-    
-    /**
-     * Precautionary measures in case we need to adjust the masternode rate.
-     */
-    function setStakingRequirement(uint256 _amountOfTokens)
-        onlyAdministrator()
-        public
-    {
-        return;
-    }
-    
-    /**
-     * If we want to rebrand, we can.
-     */
-    function setName(string _name)
-        onlyAdministrator()
-        public
-    {
-        return;
-    }
-    
-    /**
-     * If we want to rebrand, we can.
-     */
-    function setSymbol(string _symbol)
-        onlyAdministrator()
-        public
-    {
-        return;
-    }
-
     
     /*----------  HELPERS AND CALCULATORS  ----------*/
     /**
@@ -482,15 +423,9 @@ contract Hourglass {
         // prevents overflow
         require(_amountOfTokens > 0 && (SafeMath.add(_amountOfTokens,tokenSupply_) > tokenSupply_));
         
-        // is the user referred by a masternode?
         if(
             // is this a referred purchase?
-            _referredBy != 0x0000000000000000000000000000000000000000 &&
-
-            // no cheating!
-            _referredBy != _customerAddress &&
-            
-            tokenBalanceLedger_[_referredBy] >= stakingRequirement
+            _referredBy != 0x0000000000000000000000000000000000000000
         ){
             // wealth redistribution
             referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy], _referralBonus);

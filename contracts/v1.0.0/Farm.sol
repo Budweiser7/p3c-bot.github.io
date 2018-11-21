@@ -1,17 +1,23 @@
 pragma solidity ^0.4.21;
-
 /***
  *    ,------.                             
  *    |  .---'  ,--,--. ,--.--. ,--,--,--. 
  *    |  `--,  ' ,-.  | |  .--' |        | 
  *    |  |`    \ '-'  | |  |    |  |  |  | 
  *    `--'      `--`--' `--'    `--`--`--' 
- *   
+ * 
+ *  v RC
  *  "With help, wealth grows..."
  *  What?
  *  -> Maintains crops, so that farmers can reinvest on user behaf.
  *  -> A crop contract auto reinvests P3C on behalf of users.
  *  -> Make sure to change the P3C Addresses before deployment.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
  */       
 
 contract Hourglass {
@@ -27,7 +33,7 @@ contract Hourglass {
 }
 
 contract Farm {
-  address public p3cAddress = 0x80DAfcF47A0199b71C187C84BA68Cfb999f2A1ef;
+  address public p3cAddress = 0xaE5433263a626F397fED88421CC85FfD22BBC8dD;
   
   // Mapping of owners to their crops.
   mapping (address => address) public crops;
@@ -82,7 +88,11 @@ contract Farm {
    * @dev Get whether or not your crop is disabled.
    */
   function myCropDisabled() external view returns (bool) {
-    return Crop(crops[msg.sender]).disabled();
+    if (crops[msg.sender] != address(0)){
+        return Crop(crops[msg.sender]).disabled();
+    } else {
+        return true;
+    }
   }
 }
 
@@ -113,8 +123,9 @@ contract Crop {
 
   /**
    * @dev Enables anyone with a masternode to earn referral fees on P3C reinvestments.
+   * @param _playerAddress referral address.
    */
-  function reinvest() external {
+  function reinvest(address _playerAddress) external {
     // reinvest must be enabled
     require(disabled == false);
     
@@ -126,7 +137,7 @@ contract Crop {
 
     uint256 bal = address(this).balance;
     // reinvest with a referral fee for sender
-    p3c.buy.value(bal)(msg.sender);
+    p3c.buy.value(bal)(_playerAddress);
   }
   
   /**
