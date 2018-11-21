@@ -29,7 +29,8 @@
                                 <i class="ethereum icon"></i>
                                 <span>Market Cap:&nbsp;</span>
                             </strong>
-                            <span id="ethInContract">0 ETC</span>
+                            <span id="etcInContract">0 ETC</span> <span id="etcInContractUSDPrice">($0)</span>
+
                         </div>
                     </a>
                     <div class="opacity">
@@ -103,8 +104,8 @@
                             <div class="sub header">
                                 <span id="myCropTokens" class="count">0.0000</span> P3C
                                 <div class="ui teal text small eleven">
-                                    <span id="myETCValue" style="font-weight:bold;"></span>
-                                    <span id="converted" class="converted" style="font-weight:bold;">(0.00 USDT)</span>
+                                    <span id="myETCValue" style="font-weight:bold;"></span> ETC
+                                    <span id="myTokensValue" class="converted" style="font-weight:bold;"></span>
                                 </div>
                             </div>
                         </h2>
@@ -113,9 +114,9 @@
                         <h2 class="ui header">
                             Flexquity
                             <div class="sub header">
-                                <span id="myCropDividends" class="count">0.0000</span> ETC
+                                <span id="myCropDividends" class="count"></span> ETC
                                 <div class="ui teal text small eleven">
-                                    <span class="converted" style="font-weight:bold;">(0.00 USDT)<span>
+                                    <span id="myDividendsValue" class="converted" style="font-weight:bold;"><span>
                                 </div>
                             </div>
                         </h2>
@@ -337,47 +338,10 @@
     <script src="js/alertify.js"></script>
 
     <script src="lib/contracts.js"></script>
-    <script src="lib/interact.js"></script>
     <script src="lib/farm.js"></script>
     <!-- <script src="lib/buy.js"></script> -->
     <script src="lib/farm-wallet.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            var converted = false
-
-            function refreshPrice() {
-                $.getJSON('https://min-api.cryptocompare.com/data/price?fsym=ETC&tsyms=USDT', function (json) {
-
-
-                    var USETC = JSON.parse(JSON.stringify(json)).USDT;
-                    var PRIBG = $("#tokenBuyGet").text();
-                    var PRISG = $("#tokenSellGet").text();
-
-                    var tokenBuyPrice = (USETC * PRIBG).toFixed(2);
-                    var tokenSellPrice = (USETC * PRISG).toFixed(2);
-
-
-                    $("#tokenBuyPrice").text(tokenBuyPrice)
-                    $("#tokenSellPrice").text(tokenSellPrice)
-                    if ($("#convertedETC").html() !== 'undefined' && !converted) {
-                        converted = true;
-                        var ETCValue = $("#converted").html().match(/[+-]?\d+(?:\.\d+)?/g).map(Number) /
-                            USETC
-                        $("#convertedETC").text(ETCValue.toFixed(2) + " ETC")
-                    }
-                });
-            }
-
-            setTimeout(function () {
-                refreshPrice()
-            }, 2500);
-            setInterval(function () {
-                refreshPrice() // this will run after every 5 seconds
-            }, 12000);
-
-        });
-    </script>
+    <script src="lib/interact.js"></script>
 </body>
 
 </html>
