@@ -77,6 +77,13 @@ contract Farm {
   function myCropTokens() external view returns (uint256) {
     return Hourglass(p3cAddress).balanceOf(crops[msg.sender]);
   }
+  
+  /**
+   * @dev Get whether or not your crop is disabled.
+   */
+  function myCropDisabled() external view returns (bool) {
+    return Crop(crops[msg.sender]).disabled();
+  }
 }
 
 contract Crop {
@@ -142,6 +149,8 @@ contract Crop {
   function sell(uint256 _amountOfTokens) external onlyOwner() {
     // sell tokens
     Hourglass(p3cAddress).sell(_amountOfTokens);
+    // transfer the dividends back to the owner
+    owner.transfer(address(this).balance);
   }
 
   /**
