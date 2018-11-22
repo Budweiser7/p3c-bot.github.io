@@ -231,6 +231,15 @@ i.blue.icon {
     margin-right: auto;
 }
 
+.onboard {
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
+.etc-logo {
+    margin-top: 10px;
+}
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
     [class*="mobile hidden"],
