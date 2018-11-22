@@ -232,8 +232,11 @@ i.blue.icon {
 }
 
 .onboard {
-    margin-top: 15px;
-    margin-left: 5px;
+    padding: 10px;
+}
+
+.custom {
+    max-width: 20%;
 }
 
 .etc-logo {
