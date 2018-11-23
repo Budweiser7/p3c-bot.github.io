@@ -231,6 +231,11 @@ i.blue.icon {
     margin-right: auto;
 }
 
+.agreement {
+    text-align: center;
+    padding: 5px;
+}
+
 .onboard {
     padding: 10px;
 }
@@ -240,7 +245,7 @@ i.blue.icon {
 }
 
 .etc-logo {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 /* Mobile */
