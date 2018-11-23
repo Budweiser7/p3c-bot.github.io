@@ -248,6 +248,10 @@ i.blue.icon {
     margin-top: 20px;
 }
 
+.qtip-content {
+    background-color: white;
+}
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
     [class*="mobile hidden"],
