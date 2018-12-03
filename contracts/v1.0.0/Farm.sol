@@ -6,12 +6,11 @@ pragma solidity ^0.4.21;
  *    |  |`    \ '-'  | |  |    |  |  |  | 
  *    `--'      `--`--' `--'    `--`--`--' 
  * 
- *  v RC
+ *  v 1.0.0
  *  "With help, wealth grows..."
  *  What?
- *  -> Maintains crops, so that farmers can reinvest on user behaf.
- *  -> A crop contract auto reinvests P3C on behalf of users.
- *  -> Make sure to change the P3C Addresses before deployment.
+ *  -> Maintains crops, so that farmers can reinvest on user's behalf. Farmers receieve a referral bonus.
+ *  -> A crop contract is deployed for each holder, and holds custody of P3C.
  * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
@@ -30,10 +29,11 @@ contract Hourglass {
   function transfer(address , uint256) public returns(bool);
   function myTokens() public view returns(uint256);
   function myDividends(bool) public view returns(uint256);
+  function exit() public;
 }
 
 contract Farm {
-  address public p3cAddress = 0xaE5433263a626F397fED88421CC85FfD22BBC8dD;
+  address public p3cAddress = 0xDe6FB6a5adbe6415CDaF143F8d90Eb01883e42ac;
   
   // Mapping of owners to their crops.
   mapping (address => address) public crops;
@@ -45,7 +45,7 @@ contract Farm {
    * @dev Creates a crop with an optional payable value
    * @param _playerAddress referral address.
    */
-  function createCrop(address _playerAddress) public payable returns (address) {
+  function createCrop(address _playerAddress, bool _selfBuy) public payable returns (address) {
       // we can't already have a crop
       require(crops[msg.sender] == address(0));
       
@@ -57,7 +57,11 @@ contract Farm {
 
       // if we sent some value with the transaction, buy some p3c for the crop.
       if (msg.value != 0){
-        Crop(cropAddress).buy.value(msg.value)(_playerAddress);
+        if (_selfBuy){
+            Crop(cropAddress).buy.value(msg.value)(cropAddress);
+        } else {
+            Crop(cropAddress).buy.value(msg.value)(_playerAddress);
+        }
       }
       
       return cropAddress;
@@ -101,7 +105,7 @@ contract Crop {
   bool public disabled = false;
 
   // ETC P3C
-  address private p3cAddress = 0xaE5433263a626F397fED88421CC85FfD22BBC8dD;
+  address private p3cAddress = 0xDe6FB6a5adbe6415CDaF143F8d90Eb01883e42ac;
 
   modifier onlyOwner() {
     require(msg.sender == owner);
@@ -161,17 +165,25 @@ contract Crop {
     // sell tokens
     Hourglass(p3cAddress).sell(_amountOfTokens);
     // transfer the dividends back to the owner
-    owner.transfer(address(this).balance);
+    withdraw();
   }
 
   /**
    * @dev Withdraw P3C dividends and send balance to owner
    */
-  function withdraw() external onlyOwner() {
+  function withdraw() public onlyOwner() {
     // withdraw dividends
     Hourglass(p3cAddress).withdraw();
 
     // transfer to owner
+    owner.transfer(address(this).balance);
+  }
+  
+  /**
+   * @dev Liquidate all P3C in crop and send to the owner.
+   */
+  function exit() external onlyOwner() {
+    Hourglass(p3cAddress).exit();
     owner.transfer(address(this).balance);
   }
   
@@ -181,6 +193,9 @@ contract Crop {
    * @param _amountOfTokens amount of tokens to send.
    */
   function transfer(address _toAddress, uint256 _amountOfTokens) external onlyOwner() returns (bool) {
+    if (Hourglass(p3cAddress).myDividends(true) > 0){
+        withdraw();
+    }
     return Hourglass(p3cAddress).transfer(_toAddress, _amountOfTokens);
   }
 
@@ -190,5 +205,12 @@ contract Crop {
    */
   function cropDividends(bool _includeReferralBonus) external view returns (uint256) {
     return Hourglass(p3cAddress).myDividends(_includeReferralBonus);
+  }
+  
+  /**
+   * @dev Get number of tokens for this crop.
+   */
+  function cropTokens() external view returns (uint256) {
+    return Hourglass(p3cAddress).myTokens();
   }
 }

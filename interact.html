@@ -9,16 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/semantic.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/alertify.min.css" />
-    <!-- Default theme -->
-    <link rel="stylesheet" href="css/themes/default.min.css" />
-    <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="css/themes/semantic.min.css" />
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="css/themes/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/jquery.qtip.min.css">
+    <link rel="stylesheet" href="css/alertify.min.css">
     <link rel="icon" type="image/png" href="img/whale.png">
+
 </head>
 
 <body>
@@ -36,16 +29,15 @@
                                 <i class="ethereum icon"></i>
                                 <span>Market Cap:&nbsp;</span>
                             </strong>
-                            <span id="etcInContract">0 ETC</span> <span id="etcInContractUSDPrice">($0)</span>
-
+                            <span id="ethInContract">0 ETC</span>
                         </div>
                     </a>
                     <div class="opacity">
                         <strong>
                             <i class="tree icon"></i>
-                            <span>Total P3C:&nbsp;</span>
+                            <span>Supply:&nbsp;</span>
                         </strong>
-                        <span id="tokensInCirculation">0.0</span></div>
+                        <span id="tokensInCirculation">0.0</span> P3C</div>
                 </div>
             </div>
         </div>
@@ -75,9 +67,9 @@
                     <div class="ui positive button price no click">
                         <i class="ethereum green icon"></i>
                         <strong>
-                            <span class="buy-price" id="tokenBuyGet">0.0000</span>
-                            <span class="ui green text small eleven"> | </span> <span class="ui green text small eleven"
-                                id="tokenUSDBuyPrice">0.00</span>
+                            <span class="buyPrice" id="tokenBuyGet">0.0000</span>
+                            <span class="ui green text small eleven"> | $</span> <span class="ui green text small eleven"
+                                id="tokenBuyPrice">0.00</span>
                         </strong>
                     </div>
                 </div>
@@ -89,8 +81,8 @@
                         ETC
                     </div>
                 </div>
-                <button id="buy" class="ui large fluid green button" style="margin-top:10px;">
-                    Buy P3C
+                <button class="ui large fluid green button" style="margin-top:10px;">
+                    Buy
                 </button>
                 <div id="buyAmount" class="ui fluid large basic green button approx no click" style="margin-top:10px;">
                     <i>How much will you buy?</i>
@@ -100,6 +92,9 @@
             <div class="eight wide column border right border left" style="background: rgba(58, 150, 139, 0.17);">
                 <h1 class="ui header">
                     <div style="margin-left: 10px;" class="content">My Holdings
+                        <div class="sub header">Strong hands lead to growth and stability. <a target="_blank" href="https://p3c.trade">Price
+                                Chart
+                            </a></div>
                     </div>
                 </h1>
 
@@ -107,12 +102,12 @@
 
                     <div class="ui padded center aligned segment" id="myTokens">
                         <h2 class="ui header">
-                            My P3C
+                            My Old Tokens
                             <div class="sub header">
-                                <span id="myCropTokens" class="count"></span> P3C
+                                <span class="count">0.0000</span> P3C
                                 <div class="ui teal text small eleven">
-                                    <span id="myETCValue" style="font-weight:bold;"></span> ETC
-                                    <span id="myTokensValue" class="converted" style="font-weight:bold;"></span>
+                                    <span id="convertedETC" style="font-weight:bold;"></span>
+                                    <span id="converted" class="converted" style="font-weight:bold;">(0.00 USDT)</span>
                                 </div>
                             </div>
                         </h2>
@@ -121,9 +116,9 @@
                         <h2 class="ui header">
                             My Dividends
                             <div class="sub header">
-                                <span id="myCropDividends" class="count"></span> ETC
+                                <span class="count">0.0000</span> ETC
                                 <div class="ui teal text small eleven">
-                                    <span id="myDividendsValue" class="converted" style="font-weight:bold;"><span>
+                                    <span class="converted" style="font-weight:bold;">(0.00 USDT)<span>
                                 </div>
                             </div>
                         </h2>
@@ -132,10 +127,10 @@
 
                 <div class="ui two column centered grid">
                     <div class="column">
-                        <button id="reinvest" class="ui teal fluid button large">Reinvest Dividends</button>
+                        <button id="reinvest" class="ui teal fluid button large">Reinvest My Dividends</button>
                     </div>
                     <div class="column">
-                        <button id="withdraw" class="ui teal fluid button large">Withdraw Dividends</button>
+                        <button id="withdraw" class="ui teal fluid button large">Withdraw My Dividends</button>
                     </div>
                 </div>
                 <div class="ui one column centered grid">
@@ -145,11 +140,6 @@
                             <span class="ui text blue small" style="float: right"><a href="/sponsor.html" target="_blank">Buy
                                     this sponsorship space!</a></span>
                         </div>
-                    </div>
-                    <div id="autoReinvest" class="ui toggle checkbox reinvest">
-                        <input type="checkbox" name="public">
-                        <label id="reinvestToggle" for="autoReinvest">Auto Reinvest <i class="info circle icon"></i></label>                        
-                        <br>
                     </div>
                 </div>
 
@@ -175,8 +165,7 @@
                         <i class="ethereum green icon"></i>
                         <strong>
                             <span class="sellPrice" id="tokenSellGet">0.0000</span>
-                            <span class="ui blue text small eleven"> | </span> <span class="ui blue text small eleven"
-                                id="tokenUSDSellPrice">0.00</span>
+                            <span class="ui blue text small eleven"> | $</span> <span class="ui blue text small eleven" id="tokenSellPrice">0.00</span>
                         </strong>
                     </div>
                 </div>
@@ -189,8 +178,8 @@
                         P3C
                     </span>
                 </div>
-                <button id="sell" class="ui large fluid blue button" style="margin-top:10px;">
-                    Sell P3C
+                <button class="ui large fluid blue button" style="margin-top:10px;">
+                    Sell
                 </button>
                 <div id="sellAmount" class="ui fluid large basic blue button no click approx" style="margin-top:10px;">
                     <i>How much will you sell?</i>
@@ -200,15 +189,8 @@
 
         <div style="background-color: #eee; height: 1px; margin-top:20px; margin-bottom:20px;"></div>
 
-        <div class="ui olive message">
-            <p>Make sure you have an
-                <a target="_blank" href="https://chrome.google.com/webstore/detail/saturn-wallet/nkddgncdjgjfcddamfgcmfnlhccnimig">Saturn
-                    Wallet enabled</a>, and Metamask turned off. <b>Contract will show 0 balance if wallet not
-                    connected
-                    properly!</b> <a target="_blank" href="https://www.youtube.com/watch?v=XEDjtJJH0BE&"><b>Video
-                        Tutorial.</b></a>
-                </b>
-            </p>
+        <div class="ui red message">
+            <p><b>Old P3C Interface:</b> Please go to the <a href="/transition.html">upgrade page</a> to upgrade. Need help? <a href="https://www.youtube.com/watch?v=8jXrzqg41GI" target="_blank">Video Tutorial</a></p>
         </div>
 
         <div style="background-color: #eee; height: 1px; margin-top:20px; margin-bottom:20px;"></div>
@@ -217,8 +199,7 @@
 
             <div class="eight wide column">
                 <div style="text-align: center">
-                    <a href="https://discord.gg/crjsdJr" target="_blank" class="ui left labeled icon large fluid green button"
-                        style="margin-bottom:10px;">
+                    <a href="https://discord.gg/crjsdJr" target="_blank" class="ui left labeled icon large fluid green button" style="margin-bottom:10px;">
                         <i class="left discord icon"></i>
                         Join Our Community
                     </a>
@@ -226,48 +207,33 @@
                 <div class="ui segments">
                     <div class="ui segment">
                         <h4 class="ui header">
-                        </h4>
+                            Instructions:</h4>
+                    </div>
+                    <div class="ui segment">
                         <p>
-                            <b>Instructions:</b> Please use
+                            Please use
                             <a target="_blank" href="https://chrome.google.com/webstore/detail/saturn-wallet/nkddgncdjgjfcddamfgcmfnlhccnimig">Saturn
                                 Wallet
                             </a> to interact (disable Metamask while using).
                         </p>
                     </div>
                     <div class="ui segment">
-                        <p class="instruction">
-                            <b>1.</b> You buy into the contract by purchasing P3C, every token purchased increases the
-                            P3C
+                        <p>
+                            <b>1.</b> You buy into the contract by purchasing P3C, every token purchased increases the P3C
                             price by +0.00000001 ETC.
                             <br>
-                            <b>2.</b> 10% of what you spend to buy the P3C gets distributed to all other
-                            P3C
+                            <b>2.</b> 10% of what you spend to buy the P3C gets distributed proportionally to all other P3C
                             holders.
                             <br>
-                            <b>3.</b> When you sell your P3C, you get back ETC, and the global
-                            price
-                            goes down by -0.00000001 ETC.
+                            <b>3.</b> When you sell your P3C, you get back ETC at the specified price, and the global price
+                            per P3C goes down by -0.00000001 ETC.
                             <br>
-                            <b>4.</b> 10% of what you would get back is distributed to P3C
-                            holders
+                            <b>4.</b> 10% of what you would get back for the sale is distributed to all other P3C holders
                             proportionally.
                         </p>
                     </div>
                 </div>
-                <div class="ui segments masternode hidden">
-                    <div class="ui secondary segment">
-                        <div class="link masternode">
-                            <a id="masternodeLink" href="/?mn=0x">https://p3c.io/index.html?mn=0x123456</a>
-                        </div>
-                    </div>
-                    <div class="ui segment">
-                        <p>You receive
-                            <strong>33%</strong> of the community fee when someone buys P3C via your link! This does
-                            not
-                            affect how many tokens they get, and only works for their initial purchase.
-                        </p>
-                    </div>
-                </div>
+
             </div>
 
             <div class="eight wide column">
@@ -277,7 +243,8 @@
                             <i class="circular inverted blue exchange alternate icon"></i>
                             <div class="content">
                                 Transfer
-                                <div class="sub header">Transfer your P3C to another account.</div>
+                                <div class="sub header">Be aware that sending tokens immediately withdraws your dividends
+                                    and imposes a <b>10%</b> community fee.</div>
                             </div>
                         </h4>
                     </div>
@@ -299,7 +266,7 @@
                         <span class="approx">Type in a valid address and token amount..</span>
                     </div>
                     <div class="ui segment">
-                        <button id="transfer" class="ui right labeled large icon blue fluid button">
+                        <button class="ui right labeled large icon fluid button">
                             <i class="right arrow icon"></i>
                             Transfer
                         </button>
@@ -316,50 +283,84 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="ui inverted vertical footer segment gradient emerald">
-        <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-                <div class="three wide column">
-                    <div class="ui inverted link list">
-                        <a class="item" href="http://p3c.io/">Home</a>
-                        <a class="dashboard-link item" href="/interact.html">Dashboard</a>
-                        <a class="item" href="https://p3c.hostedwiki.co/pages/P3C%20-%20Explained">Wiki</a>
+                <div class="ui segments masternode hidden">
+                    <div class="ui segment">
+                        <h4 class="ui header">You are currently holding enough tokens to run a Masternode!</h4>
+                    </div>
+                    <div class="ui secondary segment">
+                        <div class="link masternode">
+                            <a href="/?masternode=0x">https://p3c.io/index.html?masternode=0x123456</a>
+                        </div>
+                    </div>
+                    <div class="ui segment">
+                        <p>You receive
+                            <strong>33%</strong> of the community fee when someone buys tokens via your link! This does not
+                            affect how many tokens they purchase.
+                        </p>
                     </div>
                 </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">Social</h4>
-                    <div class="ui inverted link list">
-                        <a href="https://discord.gg/crjsdJr" target="_blank" class="item">Discord</a>
-                        <a href="https://twitter.com/p3c_io" target="_blank" class="item">Twitter</a>
-                    </div>
-                </div>
-                <div class="ten wide column">
-                    <h4 class="ui inverted header">Disclaimer</h4>
-                    <p class="instruction">
-                        This project is experimental. Do not send any ETC you cannot afford to
-                        lose. There is zero guarantee
-                        that you will make ETC. Join at your own risk and
-                        <b>PLEASE</b> do not attempt to pressure friends, family or strangers into participating. The contract is running<a style="color: orange;" target="_blank" href="https://blockscout.com/etc/mainnet/address/0xaE5433263a626F397fED88421CC85FfD22BBC8dD/transactions"> here</a> and cannot be changed. Don't trust, verify.
-                    </p>
-                </div>
+
             </div>
         </div>
+
     </div>
+    <!-- 
+    <div class="ui active dimmer" id="loadingSpinner">
+        <div class="ui massive text loader" id="loadingText">
+            <div class="content">
+                <h2 class="ui inverted header">Connecting to <i>Ethereum Classic</i></h2>
+                <a target="_blank" href="https://p3c.hostedwiki.co/pages/P3C%20-%20Explained#how-to-start-playing" class="ui right labeled large icon green button">
+                    <i class="question circle outline icon"></i>
+                    Make an account?
+                </a>
+                <noscript><h2 class="ui inverted header">You need to enable JavaScript to run this app.</h2></noscript>
+            </div>
+        </div>
+    </div> -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/alertify-new.min.js"></script>
+    <script src="js/underscore.min.js"></script>
+    <script src="js/bluebird.min.js"></script>
     <script src="js/semantic.min.js"></script>
     <script src="js/web3.min.js"></script>
-	<script src="js/qtip.min.js"></script>
+    <script src="js/alertify.min.js"></script>
 
-    <script src="lib/contracts.js"></script>
-    <script src="lib/farm.js"></script>
-    <script src="lib/farm-wallet.js"></script>
-    <script src="lib/interact.js"></script>
+    <script src="lib/legacy/contracts.js"></script>
+    <script src="lib/legacy/interact.js"></script>
+    <script src="lib/legacy/buy.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var converted = false
+            function refreshPrice() {
+                $.getJSON('https://min-api.cryptocompare.com/data/price?fsym=ETC&tsyms=USDT', function (json) {
+
+
+                    var USETC = JSON.parse(JSON.stringify(json)).USDT;
+                    var PRIBG = $("#tokenBuyGet").text();
+                    var PRISG = $("#tokenSellGet").text();
+
+                    var tokenBuyPrice = (USETC * PRIBG).toFixed(2);
+                    var tokenSellPrice = (USETC * PRISG).toFixed(2);
+
+
+                    $("#tokenBuyPrice").text(tokenBuyPrice)
+                    $("#tokenSellPrice").text(tokenSellPrice)
+                    if ($("#convertedETC").html() !== 'undefined' && !converted) {
+                        converted = true;
+                        var ETCValue = $("#converted").html().match(/[+-]?\d+(?:\.\d+)?/g).map(Number) / USETC
+                        $("#convertedETC").text(ETCValue.toFixed(2) + " ETC")
+                    }
+                });
+            }
+
+            setTimeout(function () { refreshPrice() }, 2500);
+            setInterval(function () {
+                refreshPrice() // this will run after every 5 seconds
+            }, 12000);
+
+        });
+    </script>
 </body>
 
 </html>
